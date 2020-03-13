@@ -1,14 +1,14 @@
+#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+
 #include <linux/kernel.h>
 #include <linux/slab.h>
 #include <linux/module.h>
 #include <linux/init.h>
 #include <linux/usb/input.h>
 #include <linux/hid.h>
-#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
-
 #define DRIVER_VERSION ""
 #define DRIVER_AUTHOR "Anil Kumar Adepu"
-#define DRIVER_DESC "USBHID keyboard driver"
+#define DRIVER_DESC "USB-HID keyboard driver"
 #define DRIVER_LICENSE "GPL"
 
 #define MODE1 1
@@ -55,7 +55,6 @@ struct usb_kbd {
         spinlock_t leds_lock;
         bool led_urb_submitted;
 	int mode;
-
 };
 
 static void usb_kbd_irq(struct urb *urb)
@@ -114,7 +113,6 @@ static int usb_kbd_event(struct input_dev *dev, unsigned int type,
 {
         unsigned long flags;
         struct usb_kbd *kbd = input_get_drvdata(dev);
-
 	printk(KERN_ALERT "Event: Key change reported by irq\n");
 
         if (type != EV_LED)
@@ -187,7 +185,6 @@ static void usb_kbd_led(struct urb *urb)
 {
         unsigned long flags;
         struct usb_kbd *kbd = urb->context;
-
 	printk(KERN_ALERT "LED: Received a URB from CTRL endpoint");
         if (urb->status)
                 hid_warn(urb->dev, "led urb status %d received\n", urb->status);
@@ -216,6 +213,7 @@ static int usb_kbd_open(struct input_dev *dev)
         struct usb_kbd *kbd = input_get_drvdata(dev);
 
 	printk(KERN_ALERT "Just opened the USB keyboard device");
+
         kbd->irq->dev = kbd->usbdev;
         if (usb_submit_urb(kbd->irq, GFP_KERNEL))
                 return -EIO;
@@ -226,8 +224,8 @@ static int usb_kbd_open(struct input_dev *dev)
 static void usb_kbd_close(struct input_dev *dev)
 {
         struct usb_kbd *kbd = input_get_drvdata(dev);
-	printk(KERN_ALERT "Just closed the USB keyboard device");
 
+	printk(KERN_ALERT "Just closed the USB keyboard device");
         usb_kill_urb(kbd->irq);
 }
 
@@ -290,7 +288,7 @@ static int usb_kbd_probe(struct usb_interface *iface, const struct usb_device_id
 
         kbd->usbdev = dev;
         kbd->dev = input_dev;
-	kbd->mode = MODE1;
+	kbd->mode = MODE1;	//default mode
         spin_lock_init(&kbd->leds_lock);
 
         if (dev->manufacturer)
@@ -368,6 +366,7 @@ static void usb_kbd_disconnect(struct usb_interface *intf)
         struct usb_kbd *kbd = usb_get_intfdata (intf);
 
 	printk(KERN_ALERT "Time to say bye to USB keyboard device");
+
         usb_set_intfdata(intf, NULL);
         if (kbd) {
                 usb_kill_urb(kbd->irq);
@@ -381,7 +380,7 @@ static void usb_kbd_disconnect(struct usb_interface *intf)
 static struct usb_device_id usb_kbd_id_table [] = {
          { USB_INTERFACE_INFO(USB_INTERFACE_CLASS_HID, USB_INTERFACE_SUBCLASS_BOOT,
                  USB_INTERFACE_PROTOCOL_KEYBOARD) },
-         { }
+         { }                                 
 };
 
 MODULE_DEVICE_TABLE (usb, usb_kbd_id_table);

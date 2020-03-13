@@ -1,8 +1,3 @@
-Name: Vinayak Deshpande
-UFID: 41029538
-
-Assignment 6 : USB Keyboard Driver
-
 Files included :
 usbkbd.c
 redirectUSBKeyboard.sh

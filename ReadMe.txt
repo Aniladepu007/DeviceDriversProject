@@ -1,18 +1,18 @@
 Files included :
-usbkbd.c
-redirectUSBKeyboard.sh
-Makefile
+	usbkbd.c
+	redirectUSBKeyboard.sh
+	Makefile
 
-Instructions on how the module will be tested:
+Instructions on how the module is to be tested:
 
 Copy the files usbkbd.c, Makefile and redirectUSBKeyboard.sh to a virtual linux machine
-and follow the following steps:
+and follow the steps as below:
 
-1) Compile driver module : $ make
+1) Compile driver module : $ sudo make
 
 2) Load module : $ sudo insmod usbkbd.ko
 
-3) Connect the USB Keyboard and transfer the control to Virtual Machine
+3) Connect the USB Keyboard to the laptop and transfer the control to Virtual Machine
 
 4) To pass the control of the keyboard from usbhid to usbkbd driver by running the following script
 

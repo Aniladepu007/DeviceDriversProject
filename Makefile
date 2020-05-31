@@ -1,9 +1,6 @@
-obj-m := usbkbd.o
-
-KERNEL_DIR = /usr/src/linux-headers-$(shell uname -r)
-
+obj-m += usbkbd.o
+KDIR = /lib/modules/$(shell uname -r)/build
 all:
-	$(MAKE) -C $(KERNEL_DIR) SUBDIRS=$(shell pwd)
-
+	make -C $(KDIR)  M=$(shell pwd) modules
 clean:
-	rm -rf *.o *.ko *.mod.* *.symvers *.order *~
+	make -C $(KDIR)  M=$(shell pwd) clean

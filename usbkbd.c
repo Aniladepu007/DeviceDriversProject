@@ -1,15 +1,15 @@
 #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+#define DRIVER_AUTHOR "Anil_Kumar_Adepu"
+#define DRIVER_LICENSE "GPL"
+#define DRIVER_DESC "USB_HID_Keyboard_Driver"
+#define DRIVER_VERSION ""
 
 #include <linux/kernel.h>
+#include <linux/usb/input.h>
+#include <linux/init.h>
+#include <linux/hid.h>
 #include <linux/slab.h>
 #include <linux/module.h>
-#include <linux/init.h>
-#include <linux/usb/input.h>
-#include <linux/hid.h>
-#define DRIVER_VERSION ""
-#define DRIVER_AUTHOR "Anil Kumar Adepu"
-#define DRIVER_DESC "USB-HID keyboard driver"
-#define DRIVER_LICENSE "GPL"
 
 #define MODE1 1
 #define MODE2 2
@@ -380,7 +380,7 @@ static void usb_kbd_disconnect(struct usb_interface *intf)
 static struct usb_device_id usb_kbd_id_table [] = {
          { USB_INTERFACE_INFO(USB_INTERFACE_CLASS_HID, USB_INTERFACE_SUBCLASS_BOOT,
                  USB_INTERFACE_PROTOCOL_KEYBOARD) },
-         { }                                 
+         { }
 };
 
 MODULE_DEVICE_TABLE (usb, usb_kbd_id_table);

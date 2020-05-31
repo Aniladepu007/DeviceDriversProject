@@ -1,2 +1,2 @@
-sudo echo -n "1-2:1.2" > /sys/bus/usb/drivers/usbhid/unbind
-sudo echo -n "1-2:1.2" > /sys/bus/usb/drivers/usbkbd/bind
+sudo echo -n "1-3:1.0" > /sys/bus/usb/drivers/usbhid/unbind
+sudo echo -n "1-3:1.0" > /sys/bus/usb/drivers/usbkbd/bind
